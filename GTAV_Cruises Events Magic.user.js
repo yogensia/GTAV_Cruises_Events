@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GTAV_Cruises Events Magic 
 // @namespace    https://github.com/qlimax5000/GTAV_Cruises_Events/
-// @version      3.2
+// @version      5.0
 // @description  Events block for GTAV_Cruises
 // @author       Justin Howe [https://github.com/JustinHowe]
 // @match        https://www.reddit.com/r/GTAV_Cruises
