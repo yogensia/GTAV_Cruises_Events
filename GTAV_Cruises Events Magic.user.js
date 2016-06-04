@@ -10,8 +10,10 @@
 // @match        https://www.reddit.com/r/GTAV_Cruises/*
 // @match        https://www.reddit.com/r/gtav_cruises/*
 // @match        https://www.reddit.com/r/Gtav_cruises/*
-// @grant        none
+// @grant        GM_getResourceURL
 // @require      https://raw.githubusercontent.com/qlimax5000/GTAV_Cruises_Events/master/jstz.min.js
+// @resource     eventsCSS event-module.css
+// @resource     backgroundIMG background.jpg
 // ==/UserScript==
 
 // Event Title Format: [Region] | [Date] | [Title] | [GMT] | [Time]
@@ -39,14 +41,6 @@ var noEvents = false;
 
 // Comment to enable console logging.
 console.log = function() {}
-
-// Image Preload
-function preload(arrayOfImages) {
-	$(arrayOfImages).each(function(){
-		$('<img/>')[0].src = this;
-	});
-}
-preload(['https://raw.githubusercontent.com/qlimax5000/GTAV_Cruises_Events/master/background.jpg']);
 
 function toTitleCase(str) {
 	return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -229,11 +223,16 @@ $(window).load(function(){
 	var currentLocation = currentTimezone.split("/");
 	currentLocation = currentLocation[1].replace(/\_/g, "+");
 
-	var eventOpenSansCSS = '<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700italic,700" rel="stylesheet" type="text/css">';
-	var eventModuleCSS = '<link rel="stylesheet" type="text/css" href="https://rawgit.com/yogensia/userscripts/master/event-module.css" media="all">';
-	var eventModuleHTML = '<div id="eventsWidget"><blockquote class="events-module" style="text-align:center"><h3><a id="eventsHeader" href="https://www.reddit.com/r/GTAV_Cruises/search?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all#res-hide-options" style="color:#fff">Cruises loading...</a></h3><p id="topBodyText"><strong>Countdown timers auto-update</strong></p><div id="eventsContent"></div><div id="footer"><strong>Local time detected as ' + currentLocation.replace(/\+/g, " ") + '<br /></strong></div></blockquote></div>';
+	// use GreaseMonkey API to get CSS and images
+	var eventModuleCSSRes = GM_getResourceURL("eventsCSS");
+	var backgroundRes     = GM_getResourceURL("backgroundIMG");
 
-	$("head").append(eventOpenSansCSS + eventModuleCSS);
+	var eventOpenSansCSS = '<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700italic,700" rel="stylesheet" type="text/css">';
+	var eventModuleCSS   = '<link rel="stylesheet" type="text/css" href="'+eventModuleCSSRes+'" media="all">';
+	var eventModuleCSS2  = '<style type="text/css">.side .md .event-block{background-image:url('+backgroundRes+')}</style>';
+	var eventModuleHTML  = '<div id="eventsWidget"><blockquote class="events-module" style="text-align:center"><h3><a id="eventsHeader" href="https://www.reddit.com/r/GTAV_Cruises/search?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all#res-hide-options" style="color:#fff">Cruises loading...</a></h3><p id="topBodyText"><strong>Countdown timers auto-update</strong></p><div id="eventsContent"></div><div id="footer"><strong>Local time detected as ' + currentLocation.replace(/\+/g, " ") + '<br /></strong></div></blockquote></div>';
+
+	$("head").append(eventOpenSansCSS + eventModuleCSS + eventModuleCSS2);
 	$(".side .md").prepend(eventModuleHTML);
 
 	var upcomingEventsJSON = $.getJSON("https://www.reddit.com/r/GTAV_Cruises/search.json?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all", function() {
@@ -612,5 +611,5 @@ $(window).load(function(){
 
 			setInterval(refreshTimer, 30000);
 		}
-	})
-})
+	});
+});
