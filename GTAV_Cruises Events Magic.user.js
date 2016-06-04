@@ -228,14 +228,12 @@ $(window).load(function(){
 	var currentTimezone = jstzTimezone.name();
 	var currentLocation = currentTimezone.split("/");
 	currentLocation = currentLocation[1].replace(/\_/g, "+");
-	var upcomingEventsLink = "https://www.reddit.com/r/GTAV_Cruises/search?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all#res-hide-options";
 
 	var eventOpenSansCSS = '<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700italic,700" rel="stylesheet" type="text/css">';
-	var eventModuleCSS = '<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/qlimax5000/GTAV_Cruises_Events/master/event-module.css" media="all">';
-	var eventAttendanceCSS = '<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/qlimax5000/GTAV_Cruises_Events/master/event-attendance.css" media="all">';
-	var eventModuleHTML = '<div id="eventsWidget"><blockquote class="events-module" style="text-align:center"><h3><a id="eventsHeader" href="' + upcomingEventsLink + '" style="color:#fff">Cruises loading...</a></h3><p id="topBodyText"><strong>Countdown timers auto-update</strong></p><div id="eventsContent"></div><div id="footer"><strong>Local time detected as ' + currentLocation.replace(/\+/g, " ") + '<br /></strong></div></blockquote></div>';
+	var eventModuleCSS = '<link rel="stylesheet" type="text/css" href="https://rawgit.com/yogensia/userscripts/master/event-module.css" media="all">';
+	var eventModuleHTML = '<div id="eventsWidget"><blockquote class="events-module" style="text-align:center"><h3><a id="eventsHeader" href="https://www.reddit.com/r/GTAV_Cruises/search?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all#res-hide-options" style="color:#fff">Cruises loading...</a></h3><p id="topBodyText"><strong>Countdown timers auto-update</strong></p><div id="eventsContent"></div><div id="footer"><strong>Local time detected as ' + currentLocation.replace(/\+/g, " ") + '<br />Report widget bugs to <a title="All your base are belong to PapaSyntax" href="https://www.reddit.com/user/PapaSyntax/" target="_blank">PapaSyntax</a></strong></div></blockquote></div>';
 
-	$("head").append(eventOpenSansCSS + eventModuleCSS + eventAttendanceCSS);
+	$("head").append(eventOpenSansCSS + eventModuleCSS);
 	$(".side .md").prepend(eventModuleHTML);
 
 	var upcomingEventsJSON = $.getJSON("https://www.reddit.com/r/GTAV_Cruises/search.json?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all", function() {
