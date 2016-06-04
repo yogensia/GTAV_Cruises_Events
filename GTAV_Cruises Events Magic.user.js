@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         GTAV_Cruises Events Magic 
+// @name         GTAV_Cruises Events Magic
 // @namespace    https://github.com/qlimax5000/GTAV_Cruises_Events/
 // @version      5.2
 // @description  Events block for GTAV_Cruises
@@ -157,24 +157,24 @@ function checkFinished() {
 			finishedCounter++;
 		}
 	}
-    
-    var newHeaderCounter = goodEvents.length - finishedCounter;
+
+	var newHeaderCounter = goodEvents.length - finishedCounter;
 
 	if (finishedCounter != 0) {
 		console.log(finishedCounter + " Events Finished, Changing Header to " + newHeaderCounter + " Events");
 		$("#eventsHeader").text(newHeaderCounter + ' Cruises Found');
 	}
-    
-    if (finishedCounter == goodEvents.length) {
-    	noEvents = true;
-         $("#eventsHeader").text("It's Lonely Around Here...");
-         $("#topBodyText").text("");
+
+	if (finishedCounter == goodEvents.length) {
+		noEvents = true;
+		 $("#eventsHeader").text("It's Lonely Around Here...");
+		 $("#topBodyText").text("");
 		 $("#eventsContent").replaceWith('<div id="eventsContent"><p align="center"><strong><span style="color:#48a948; font-size:150%">No Cruises Found.</span> <br /><br /><span style="color:#48a948; font-size:100%">Won\'t you liven things up a bit and create one?</span></strong></p></div>');
-    }
-    
-    if ((newHeaderCounter == 1) && !noEvents) {
-        $("#eventsHeader").text(newHeaderCounter + ' Cruise Found');
-    }
+	}
+
+	if ((newHeaderCounter == 1) && !noEvents) {
+		$("#eventsHeader").text(newHeaderCounter + ' Cruise Found');
+	}
 }
 
 function getBadDate(badDate) {
@@ -238,11 +238,11 @@ $(window).load(function(){
 
 	var upcomingEventsJSON = $.getJSON("https://www.reddit.com/r/GTAV_Cruises/search.json?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all", function() {
 
-        // Get events from JSON response
-        for (var i = upcomingEventsJSON["responseJSON"]["data"]["children"].length - 1; i >= 0; i--) {
-            events[i] = upcomingEventsJSON["responseJSON"]["data"]["children"][i]["data"]["title"];
-            eventsURL[i] = upcomingEventsJSON["responseJSON"]["data"]["children"][i]["data"]["url"];
-        };
+		// Get events from JSON response
+		for (var i = upcomingEventsJSON["responseJSON"]["data"]["children"].length - 1; i >= 0; i--) {
+			events[i] = upcomingEventsJSON["responseJSON"]["data"]["children"][i]["data"]["title"];
+			eventsURL[i] = upcomingEventsJSON["responseJSON"]["data"]["children"][i]["data"]["url"];
+		};
 
 		console.log("Events Found: " + events.length);
 
@@ -278,15 +278,15 @@ $(window).load(function(){
 		console.log("Bad Events Found: " + badEventsCounter);
 
 		if (goodEvents.length < 1) {
-            $("#eventsHeader").text("It's Lonely Around Here...");
-            $("#topBodyText").text("");
+			$("#eventsHeader").text("It's Lonely Around Here...");
+			$("#topBodyText").text("");
 			$("#eventsContent").replaceWith('<div id="eventsContent"><p align="center"><strong><span style="color:#48a948; font-size:150%">No Cruises Found.</span> <br /><br /><span style="color:#48a948; font-size:100%">Won\'t you liven things up a bit and create one?</span></strong></p></div>');
 		} else {
-            if (goodEvents.length == 1) {
-                $("#eventsHeader").text(goodEvents.length + ' Cruise Found');
-            } else {
-                $("#eventsHeader").text(goodEvents.length + ' Cruises Found');
-            }
+			if (goodEvents.length == 1) {
+				$("#eventsHeader").text(goodEvents.length + ' Cruise Found');
+			} else {
+				$("#eventsHeader").text(goodEvents.length + ' Cruises Found');
+			}
 			continueLoading = true;
 		}
 
@@ -322,15 +322,15 @@ $(window).load(function(){
 							year = new Date().getFullYear();
 						} else {
 							year = date[2];
-                            var yearFirstChar = year.charAt(0);
+							var yearFirstChar = year.charAt(0);
 
-                            if (yearFirstChar != "2") {
-                                year = "20" + year;
-                            }
-                            year = parseInt(year, 10);
+							if (yearFirstChar != "2") {
+								year = "20" + year;
+							}
+							year = parseInt(year, 10);
 						}
-                        
-						
+
+
 
 						var monthCurrentEpoch = Date.now();
 						var monthAheadEpoch = (monthCurrentEpoch + 2678400000)/1000;
