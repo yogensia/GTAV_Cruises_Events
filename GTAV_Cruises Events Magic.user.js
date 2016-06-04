@@ -30,7 +30,9 @@ var goodEvents = [];
 var goodEventsCounter = 0;
 var badEventsCounter = 0;
 var badEventUrl = [];
-var events, epochNow;
+var events = [];
+var eventsURL = [];
+var epochNow;
 var updateCounter = 0;
 var finishedCounter = 0;
 var noEvents = false;
@@ -236,35 +238,19 @@ $(window).load(function(){
 	$("head").append(eventOpenSansCSS + eventModuleCSS + eventAttendanceCSS);
 	$(".side .md").prepend(eventModuleHTML);
 
-	var countdownHref;
-	var iframe = document.createElement('iframe');
-	iframe.frameBorder=0;
-	iframe.width="0px";
-	iframe.height="0px";
-	iframe.id="eventsiFrame";
-	iframe.setAttribute("src", upcomingEventsLink);
-	$("div.footer-parent").append(iframe);
+	var upcomingEventsJSON = $.getJSON("https://www.reddit.com/r/GTAV_Cruises/search.json?q=flair%3A%22events%22&restrict_sr=on&sort=new&t=all", function() {
 
-	// Run everything after iFrame load.
-	$("#eventsiFrame").load(function(){
-		var eventsString = "";
-
-		//Detect if legacy serch is enabled then get events from iframe
-		var legacySearch = $("#siteTable").contents().find("p.title > span.linkflairlabel").filter(function() { return ($(this).text() === 'Event') }).next();
-
-		if (legacySearch.length > 0) {
-			events = legacySearch;
-			console.log("Search Type: Legacy");
-		} else {
-			events = $("#eventsiFrame").contents().find("header.search-result-header > span.linkflairlabel").filter(function() { return ($(this).text() === 'Event') }).next();
-			console.log("Search Type: New");
-		}
+        // Get events from JSON response
+        for (var i = upcomingEventsJSON["responseJSON"]["data"]["children"].length - 1; i >= 0; i--) {
+            events[i] = upcomingEventsJSON["responseJSON"]["data"]["children"][i]["data"]["title"];
+            eventsURL[i] = upcomingEventsJSON["responseJSON"]["data"]["children"][i]["data"]["url"];
+        };
 
 		console.log("Events Found: " + events.length);
 
 		// Do initial format check and store found events
 		for (var j = 0; j < events.length; j++) {
-			var tempEvent = events[j].innerHTML;
+			var tempEvent = events[j];
 			tempEvent = tempEvent.replace(/[^\|]/g, "").length;
 			if (tempEvent == 4) {
 				goodEvents[goodEventsCounter] = events[j];
@@ -309,13 +295,13 @@ $(window).load(function(){
 		// Date and time conversion wizardry
 		if (continueLoading) {
 			for (var i=0; i < goodEvents.length; i++) {
-				var eventString = goodEvents[i].innerHTML;
+				var eventString = goodEvents[i];
 				var wellFormedEvent = eventString.replace(/[^\|]/g, "").length;
 				if (wellFormedEvent == 4) {
 					eventString = eventString.replace(/\[/g, "");
 					eventString = eventString.replace(/\]/g, "");
 					console.log("Event String: " + eventString);
-					var href = $(goodEvents[i]).attr('href');
+					var href = eventsURL[i];
 					var eventParts = eventString.split("|");
 					var region = eventParts[0];
 
