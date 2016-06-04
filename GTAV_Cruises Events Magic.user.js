@@ -46,7 +46,7 @@ function preload(arrayOfImages) {
 		$('<img/>')[0].src = this;
 	});
 }
-preload(['https://raw.githubusercontent.com/JustinHowe/userscripts/master/background.jpg']);
+preload(['https://raw.githubusercontent.com/qlimax5000/GTAV_Cruises_Events/master/background.jpg']);
 
 function toTitleCase(str) {
 	return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
