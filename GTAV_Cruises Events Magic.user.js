@@ -256,7 +256,7 @@ $(window).load(function(){
 			} else {
 				badEventsCounter++;
 				var badEventIndex = badEventsCounter - 1;
-				badEventUrl[badEventIndex] = [$(events[j]).text(), $(events[j]).attr('href')];
+				badEventUrl[badEventIndex] = [events[j], eventsURL[j]];
 			}
 		}
 
