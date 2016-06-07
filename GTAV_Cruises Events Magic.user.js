@@ -12,8 +12,8 @@
 // @match        https://www.reddit.com/r/Gtav_cruises/*
 // @grant        GM_getResourceURL
 // @require      https://raw.githubusercontent.com/qlimax5000/GTAV_Cruises_Events/master/jstz.min.js
-// @resource     eventsCSS event-module.css
-// @resource     backgroundIMG background.jpg
+// @resource     eventsCSS https://raw.githubusercontent.com/qlimax5000/GTAV_Cruises_Events/master/event-module.css
+// @resource     backgroundIMG https://raw.githubusercontent.com/qlimax5000/GTAV_Cruises_Events/master/background.jpg
 // ==/UserScript==
 
 // Event Title Format: [Region] | [Date] | [Title] | [GMT] | [Time]
